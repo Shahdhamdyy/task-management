@@ -1,0 +1,27 @@
+{
+  "name": "task-management",
+  "version": "1.0.0",
+  "description": "A secure task management REST API built with Node.js , Express, Sequelize ,JWT authentication and rate limiting",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shahdhamdyy/task-management.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Shahdhamdyy/task-management/issues"
+  },
+  "homepage": "https://github.com/Shahdhamdyy/task-management#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mysql2": "^3.16.2",
+    "sequelize": "^6.37.7"
+  }
+}
