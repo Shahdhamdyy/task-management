@@ -1,0 +1,1 @@
+A secure task management REST API built with Node.js , Express, Sequelize ,JWT authentication and rate limiting
