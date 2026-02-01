@@ -1,15 +1,12 @@
 import { Router } from 'express'
-import { registerValidation, loginValidation } from './auth.validation.js'
+import { registerSchema, loginSchema } from './auth.validation.js'
 import { registerService, loginService } from './auth.service.js'
-import { validationResult } from 'express-validator'
+import { validate } from '../../middlewares/validate.middleware.js'
+
 const router = Router()
 
-router.post('/register', registerValidation, async (req, res, next) => {
+router.post('/register', validate(registerSchema), async (req, res, next) => {
     try {
-        const errors = validationResult(req)
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() })
-        }
 
         const { name, email, password } = req.body
         const user = await registerService({ name, email, password })
@@ -26,12 +23,9 @@ router.post('/register', registerValidation, async (req, res, next) => {
     }
 })
 
-router.post('/login', loginValidation, async (req, res, next) => {
+router.post('/login', validate(loginSchema), async (req, res, next) => {
     try {
-        const errors = validationResult(req)
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() })
-        }
+
         const { email, password } = req.body
         const { user, token } = await loginService({ email, password })
         res.status(200).json({
