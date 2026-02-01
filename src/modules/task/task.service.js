@@ -26,6 +26,18 @@ export const updateTaskService = async ({ taskId, userId, data }) => {
         throw new Error('Task not found')
     }
     await task.update(data)
-    await logModel.create({ action: 'UPDATE_TASK', userId, taskId: task.id})
+    await logModel.create({ action: 'UPDATE_TASK', userId, taskId: task.id })
     return task
+}
+
+export const deleteTaskService = async ({ taskId, userId }) => {
+    const task = await taskModel.findOne({ where: { id: taskId, userId } })
+    if (!task) {
+        throw new Error('Task not found')
+    }
+    await task.destroy()
+    await logModel.create({ action: 'DELETE_TASK', userId, taskId: task.id })
+    return task
+
+
 }
