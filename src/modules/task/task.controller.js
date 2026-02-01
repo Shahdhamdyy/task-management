@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import { createTaskService , getMyTasksService} from './task.service.js'
+import { createTaskService, getMyTasksService, updateTaskService } from './task.service.js'
 import { validate } from '../../middlewares/validate.middleware.js'
-import { createTaskSchema } from './task.validation.js'
+import { createTaskSchema, updateTaskSchema } from './task.validation.js'
 import { authMiddleware } from '../../middlewares/auth.middleware.js'
 const router = Router()
 router.post('/create', authMiddleware, validate(createTaskSchema), async (req, res, next) => {
@@ -32,5 +32,23 @@ router.get('/my-tasks', authMiddleware, async (req, res, next) => {
         next(error)
     }
 })
+
+router.put('/update/:taskId', authMiddleware, validate(updateTaskSchema), async (req, res, next) => {
+    try {
+        const { taskId } = req.params
+        const { title, description, status } = req.body
+        const userId = req.user.id
+        const task = await updateTaskService({ taskId, userId, data: { title, description, status } })
+        res.status(200).json({
+            message: 'Task updated successfully',
+            task
+        })
+    } catch (error) {
+        next(error)
+    }
+})
+
+
+
 
 export default router;

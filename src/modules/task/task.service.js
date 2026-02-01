@@ -18,3 +18,14 @@ export const getMyTasksService = async (userId) => {
 
     })
 }
+
+
+export const updateTaskService = async ({ taskId, userId, data }) => {
+    const task = await taskModel.findOne({ where: { id: taskId, userId } })
+    if (!task) {
+        throw new Error('Task not found')
+    }
+    await task.update(data)
+    await logModel.create({ action: 'UPDATE_TASK', userId, taskId: task.id})
+    return task
+}
