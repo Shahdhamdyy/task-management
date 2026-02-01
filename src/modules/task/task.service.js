@@ -35,8 +35,9 @@ export const deleteTaskService = async ({ taskId, userId }) => {
     if (!task) {
         throw new Error('Task not found')
     }
-    await task.destroy()
+
     await logModel.create({ action: 'DELETE_TASK', userId, taskId: task.id })
+    await task.destroy()
     return task
 
 
