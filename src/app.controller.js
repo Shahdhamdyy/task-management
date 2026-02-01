@@ -3,7 +3,8 @@ import { databaseConnection, databaseSync } from './database/connection.js'
 import { userModel, taskModel, logModel } from './database/models/association.js'
 import authRouter from './modules/auth/auth.controller.js'
 import { rateLimiter } from './middlewares/rateLimit.middleware.js'
-
+import dotenv from 'dotenv'
+dotenv.config({ path: './config/.env' })
 import taskRouter from './modules/task/task.controller.js'
 
 
@@ -26,7 +27,9 @@ export const bootstrap = async () => {
         res.status(500).json({ message: error.message })
     })
 
-    app.listen(3000, () => {
-        console.log("server running on port 3000")
-    })
+   const PORT = process.env.PORT || 3000
+
+app.listen(PORT, () => {
+  console.log(`server running on port ${PORT}`)
+})
 }
